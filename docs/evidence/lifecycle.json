@@ -1,0 +1,19 @@
+{
+  "format_version": 1,
+  "warmup": 5,
+  "repetitions": 20,
+  "rows_per_import": 500,
+  "operation": "inspect-bound preview + streamed-bundle verification + SQLite reopen",
+  "instrumentation": "tracemalloc in a separate process from latency benchmark",
+  "live_after_warmup_bytes": 3424,
+  "live_after_20_bytes": 156554,
+  "live_growth_bytes": 153130,
+  "traced_peak_bytes": 3571281,
+  "handles_before": 5,
+  "handles_after": 5,
+  "target": {
+    "live_growth_bytes": 1048576,
+    "handle_growth": 2
+  },
+  "passed": true
+}

@@ -1,0 +1,14 @@
+.source-schema { margin-block: 1rem; padding: 1rem; border: 1px solid var(--border, #b5c4d4); border-radius: .65rem; background: var(--panel-bg, #f7fafc); color: var(--text, #172b4d); }
+.source-schema fieldset { margin-block: 1rem; padding: 1rem; border: 1px solid #b5c4d4; border-radius: .4rem; min-width: 0; }
+.source-schema label { display: grid; gap: .3rem; margin-block: .6rem; font-weight: 600; }
+.source-schema input, .source-schema select, .source-schema textarea { box-sizing: border-box; width: 100%; max-width: 100%; min-height: 2.75rem; padding: .55rem; border: 1px solid #8d9fb4; border-radius: .3rem; background: #fff; color: #172b4d; font: inherit; }
+.source-schema textarea { min-height: 5rem; resize: vertical; }
+.source-schema button { min-height: 2.75rem; margin: .3rem .6rem .3rem 0; }
+.source-schema-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: .25rem 1rem; }
+.source-schema-scroll { overflow: auto; max-height: 24rem; }
+.source-schema table { border-collapse: collapse; min-width: 100%; }
+.source-schema th, .source-schema td { padding: .6rem; border-bottom: 1px solid #cbd5e1; text-align: left; overflow-wrap: anywhere; }
+.source-schema [role=alert] { padding: .7rem; border-left: .25rem solid #a61b1b; }
+.source-schema [role=status] { padding: .5rem 0; }
+.source-schema .source-schema-check { display: flex; align-items: center; gap: .5rem; min-height: 2.75rem; }
+.source-schema input[type=checkbox] { width: 1.25rem; min-height: 1.25rem; height: 1.25rem; }

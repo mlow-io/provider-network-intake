@@ -1,0 +1,35 @@
+diff --git a/src/provider_directory_truth_layer/intake_api.py b/src/provider_directory_truth_layer/intake_api.py
+index ef58c40..e76163a 100644
+--- a/src/provider_directory_truth_layer/intake_api.py
++++ b/src/provider_directory_truth_layer/intake_api.py
+@@ -20,6 +20,10 @@ def create_workbench(path: Path | None = None, root: Path | None = None, *, demo
+     path = path or database_path()
+     store = IntakeStore(path, root or storage_root())
+     app = create_app(path)
++    if os.environ.get('PDTL_SCHEMA_CATALOG_ENABLED') == '1':
++        from provider_network_intake import CatalogStore
++        from provider_network_intake.workbench import mount as mount_source_catalog
++        app.state.source_catalog = mount_source_catalog(app, store, CatalogStore(store.root / 'source-schema-catalog.sqlite3'))
+     from .fhir_acquisition_api import mount as mount_acquisitions
+     mount_acquisitions(app, store)
+     from .mapping_assistant_api import mount as mount_assistance
+diff --git a/web/src/IntakeWorkbench.tsx b/web/src/IntakeWorkbench.tsx
+index a3aadbf..73c3af3 100644
+--- a/web/src/IntakeWorkbench.tsx
++++ b/web/src/IntakeWorkbench.tsx
+@@ -5,6 +5,7 @@ import type { NativePreview } from "./NativeEvidencePanel";
+ const NativeEvidencePanel = lazy(() => import("./NativeEvidencePanel").then(module => ({ default: module.NativeEvidencePanel })));
+ const FhirAcquisitionPanel = lazy(() => import("./FhirAcquisitionPanel").then(module => ({ default: module.FhirAcquisitionPanel })));
+ import { NormalizationPanel } from "./NormalizationPanel";
++import { SourceSchemaPanel } from "./SourceSchemaPanel";
+ import { RecurringImport, type DeliveryComparison } from "./RecurringImport";
+ import { NetworkSetup, RosterConfiguration, emptyRosterBindings, type RosterBindings } from "./NetworkSetup";
+ import { NetworkWorkFilters, NetworkCaseScope, FollowUpCaseScopes, matchesWorkScope, type FollowUpScope, type CaseScope, type ReviewEntry } from "./NetworkWork";
+@@ -777,6 +778,7 @@ function ReceiptDetail({
+         supported={(detail.profile ?? "flat") === "flat" && detail.attempts?.at(-1)?.spec?.roster_kind !== "network"}
+         onChanged={async () => { await resource.refresh(); await changed(); }}
+       />}
++      {detail.attempt_id && detail.artifact_sha && detail.label?.toLowerCase().endsWith('.csv') && <SourceSchemaPanel key={`${id}:${detail.attempt_id}`} receiptId={id} attemptId={detail.attempt_id} />}
+       <div className="iw-links">
+         {detail.artifact_sha && (
+           <>

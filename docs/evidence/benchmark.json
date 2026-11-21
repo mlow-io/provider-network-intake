@@ -1,0 +1,123 @@
+{
+  "benchmarks": [
+    {
+      "format_version": 1,
+      "workload": "csv",
+      "python": "3.13.2",
+      "platform": "Darwin",
+      "machine": "arm64",
+      "input_bytes": 9171002,
+      "rows_or_entries": 10000,
+      "catalog_variants": 1000,
+      "detail_limit": 100,
+      "cold_seconds": 0.5028980409988435,
+      "warm_median_seconds": 0.49379475000023376,
+      "maximum_seconds": 0.5028980409988435,
+      "stages": [
+        {
+          "inspect": 0.11663183299970115,
+          "recognize": 0.10612779200164368,
+          "preview": 0.28013841599749867,
+          "total": 0.5028980409988435
+        },
+        {
+          "inspect": 0.11342004199832445,
+          "recognize": 0.10845445800077869,
+          "preview": 0.2783715420009685,
+          "total": 0.5002460420000716
+        },
+        {
+          "inspect": 0.11266712500219,
+          "recognize": 0.10517699999763863,
+          "preview": 0.2768340420007007,
+          "total": 0.49467816700052936
+        },
+        {
+          "inspect": 0.11228545800258871,
+          "recognize": 0.10512775000097463,
+          "preview": 0.2763815419966704,
+          "total": 0.49379475000023376
+        },
+        {
+          "inspect": 0.11123758400208317,
+          "recognize": 0.10404629099502927,
+          "preview": 0.27569112500350457,
+          "total": 0.490975000000617
+        },
+        {
+          "inspect": 0.11014824999438133,
+          "recognize": 0.10294433300441597,
+          "preview": 0.2732276249953429,
+          "total": 0.4863202079941402
+        }
+      ],
+      "peak_rss_bytes": 101040128,
+      "target": {
+        "seconds": 5,
+        "peak_rss_bytes": 268435456
+      },
+      "passed": true,
+      "scope": "Pure Python bounded preview including input bytes and catalog; no external model/validator or full evidence-export timing."
+    },
+    {
+      "format_version": 1,
+      "workload": "plannet",
+      "python": "3.13.2",
+      "platform": "Darwin",
+      "machine": "arm64",
+      "input_bytes": 9177683,
+      "rows_or_entries": 1000,
+      "catalog_variants": 0,
+      "detail_limit": 100,
+      "cold_seconds": 0.05841041699750349,
+      "warm_median_seconds": 0.0583419579998008,
+      "maximum_seconds": 0.05875666600331897,
+      "stages": [
+        {
+          "inspect": 0.016755584001657553,
+          "recognize": 0.0,
+          "preview": 0.041654832995845936,
+          "total": 0.05841041699750349
+        },
+        {
+          "inspect": 0.016432750002422836,
+          "recognize": 0.0,
+          "preview": 0.04190920799737796,
+          "total": 0.0583419579998008
+        },
+        {
+          "inspect": 0.016381166002247483,
+          "recognize": 0.0,
+          "preview": 0.04171650000353111,
+          "total": 0.05809766600577859
+        },
+        {
+          "inspect": 0.016322333001880907,
+          "recognize": 0.0,
+          "preview": 0.041888749998179264,
+          "total": 0.05821108300006017
+        },
+        {
+          "inspect": 0.016564375000598375,
+          "recognize": 0.0,
+          "preview": 0.04203175000293413,
+          "total": 0.058596125003532507
+        },
+        {
+          "inspect": 0.016192374998354353,
+          "recognize": 0.0,
+          "preview": 0.042564291004964616,
+          "total": 0.05875666600331897
+        }
+      ],
+      "peak_rss_bytes": 63438848,
+      "target": {
+        "seconds": 5,
+        "peak_rss_bytes": 268435456
+      },
+      "passed": true,
+      "scope": "Pure Python bounded preview including input bytes and catalog; no external model/validator or full evidence-export timing."
+    }
+  ],
+  "passed": true
+}

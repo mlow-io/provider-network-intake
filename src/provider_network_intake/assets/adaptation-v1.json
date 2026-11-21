@@ -1,0 +1,604 @@
+{
+  "format_version": 1,
+  "name": "provider-network-adaptation-v1",
+  "synthetic": true,
+  "design": "Six authored source families, four related deliveries per family. No population-generalization or observed human-effort claim.",
+  "families": [
+    {
+      "id": "directory-exclusion",
+      "source": "synthetic-directory-exclusion",
+      "focus": "Source-specific directory polarity",
+      "seed": {
+        "csv": "Practitioner NPI,Office ID,Exclude Directory\n1000000004,NORTH,Y\n",
+        "source_version": null,
+        "definition": {
+          "version": 1,
+          "source": "synthetic-directory-exclusion",
+          "payer": null,
+          "network": null,
+          "source_version": null,
+          "contract": "payer-network-roster/1",
+          "grain": "practitioner_office",
+          "headers": [
+            "Practitioner NPI",
+            "Office ID",
+            "Exclude Directory"
+          ],
+          "mapping": {
+            "practitioner_npi": "Practitioner NPI",
+            "location_id": "Office ID",
+            "directory_visible": "Exclude Directory"
+          },
+          "transforms": {
+            "directory_visible": [
+              {
+                "op": "value_map",
+                "values": {
+                  "Y": false,
+                  "N": true
+                }
+              }
+            ]
+          },
+          "required": [
+            "practitioner_npi",
+            "location_id"
+          ],
+          "evidence_refs": [
+            "source-guide"
+          ]
+        }
+      },
+      "changed": {
+        "csv": "NPI,Site,Directory Flag\n1000000004,NORTH,Y\n",
+        "source_version": null
+      },
+      "repeat": {
+        "csv": "NPI,Site,Directory Flag\n1000000004,NORTH,Y\n",
+        "source_version": null
+      },
+      "reviewed_definition": {
+        "version": 1,
+        "source": "synthetic-directory-exclusion",
+        "payer": null,
+        "network": null,
+        "source_version": null,
+        "contract": "payer-network-roster/1",
+        "grain": "practitioner_office",
+        "headers": [
+          "NPI",
+          "Site",
+          "Directory Flag"
+        ],
+        "mapping": {
+          "practitioner_npi": "NPI",
+          "location_id": "Site",
+          "directory_visible": "Directory Flag"
+        },
+        "transforms": {
+          "directory_visible": [
+            {
+              "op": "value_map",
+              "values": {
+                "Y": false,
+                "N": true
+              }
+            }
+          ]
+        },
+        "required": [
+          "practitioner_npi",
+          "location_id"
+        ],
+        "evidence_refs": [
+          "source-guide"
+        ]
+      },
+      "expected_normalized": {
+        "practitioner_npi": "1000000004",
+        "location_id": "NORTH",
+        "directory_visible": false
+      },
+      "evidence": {
+        "source-guide": "Original synthetic guide: NPI is practitioner identifier; Site is source office key. Directory Flag Y means exclude; N means display. It says nothing about network participation."
+      },
+      "counter": {
+        "csv": "NPI,Site,Directory Flag\n1000000004,NORTH,Y\n",
+        "source": "synthetic-directory-exclusion-unrelated",
+        "source_version": null,
+        "expected_status": "unknown"
+      }
+    },
+    {
+      "id": "identifier-roles",
+      "source": "synthetic-identifier-roles",
+      "focus": "Rendering and billing identifiers remain distinct",
+      "seed": {
+        "csv": "Rendering NPI,Billing NPI,Office ID\n1000000004,1000000012,NORTH\n",
+        "source_version": null,
+        "definition": {
+          "version": 1,
+          "source": "synthetic-identifier-roles",
+          "payer": null,
+          "network": null,
+          "source_version": null,
+          "contract": "payer-network-roster/1",
+          "grain": "practitioner_office",
+          "headers": [
+            "Rendering NPI",
+            "Billing NPI",
+            "Office ID"
+          ],
+          "mapping": {
+            "practitioner_npi": "Rendering NPI",
+            "billing_npi": "Billing NPI",
+            "location_id": "Office ID"
+          },
+          "transforms": {},
+          "required": [
+            "practitioner_npi",
+            "location_id"
+          ],
+          "evidence_refs": [
+            "source-guide"
+          ]
+        }
+      },
+      "changed": {
+        "csv": "Clinician Key,Invoice NPI,Practice\n1000000004,1000000012,NORTH\n",
+        "source_version": null
+      },
+      "repeat": {
+        "csv": "Clinician Key,Invoice NPI,Practice\n1000000004,1000000012,NORTH\n",
+        "source_version": null
+      },
+      "reviewed_definition": {
+        "version": 1,
+        "source": "synthetic-identifier-roles",
+        "payer": null,
+        "network": null,
+        "source_version": null,
+        "contract": "payer-network-roster/1",
+        "grain": "practitioner_office",
+        "headers": [
+          "Clinician Key",
+          "Invoice NPI",
+          "Practice"
+        ],
+        "mapping": {
+          "practitioner_npi": "Clinician Key",
+          "billing_npi": "Invoice NPI",
+          "location_id": "Practice"
+        },
+        "transforms": {},
+        "required": [
+          "practitioner_npi",
+          "location_id"
+        ],
+        "evidence_refs": [
+          "source-guide"
+        ]
+      },
+      "expected_normalized": {
+        "practitioner_npi": "1000000004",
+        "billing_npi": "1000000012",
+        "location_id": "NORTH"
+      },
+      "evidence": {
+        "source-guide": "Original synthetic guide: Clinician Key is rendering practitioner NPI, Invoice NPI is billing NPI and Practice is the source office key. Billing and practitioner identifiers cannot be combined."
+      },
+      "counter": {
+        "csv": "Clinician Key,Invoice NPI,Practice\n1000000004,1000000012,NORTH\n",
+        "source": "synthetic-identifier-roles-unrelated",
+        "source_version": null,
+        "expected_status": "unknown"
+      }
+    },
+    {
+      "id": "termination-scope",
+      "source": "synthetic-termination-scope",
+      "focus": "Office departure differs from credentialing end; dates are explicit",
+      "seed": {
+        "csv": "Practitioner NPI,Office ID,Office Departure,Credentialing End\n1000000004,NORTH,2027-03-02,2027-12-31\n",
+        "source_version": null,
+        "definition": {
+          "version": 1,
+          "source": "synthetic-termination-scope",
+          "payer": null,
+          "network": null,
+          "source_version": null,
+          "contract": "payer-network-roster/1",
+          "grain": "practitioner_office",
+          "headers": [
+            "Practitioner NPI",
+            "Office ID",
+            "Office Departure",
+            "Credentialing End"
+          ],
+          "mapping": {
+            "practitioner_npi": "Practitioner NPI",
+            "location_id": "Office ID",
+            "office_end": "Office Departure",
+            "credentialing_end": "Credentialing End"
+          },
+          "transforms": {},
+          "required": [
+            "practitioner_npi",
+            "location_id"
+          ],
+          "evidence_refs": [
+            "source-guide"
+          ]
+        }
+      },
+      "changed": {
+        "csv": "Individual,Facility,Term Date,Provider End\n1000000004,NORTH,02/03/2027,2027-12-31\n",
+        "source_version": null
+      },
+      "repeat": {
+        "csv": "Individual,Facility,Term Date,Provider End\n1000000004,NORTH,02/03/2027,2027-12-31\n",
+        "source_version": null
+      },
+      "reviewed_definition": {
+        "version": 1,
+        "source": "synthetic-termination-scope",
+        "payer": null,
+        "network": null,
+        "source_version": null,
+        "contract": "payer-network-roster/1",
+        "grain": "practitioner_office",
+        "headers": [
+          "Individual",
+          "Facility",
+          "Term Date",
+          "Provider End"
+        ],
+        "mapping": {
+          "practitioner_npi": "Individual",
+          "location_id": "Facility",
+          "office_end": "Term Date",
+          "credentialing_end": "Provider End"
+        },
+        "transforms": {
+          "office_end": [
+            {
+              "op": "date",
+              "format": "%d/%m/%Y"
+            }
+          ]
+        },
+        "required": [
+          "practitioner_npi",
+          "location_id"
+        ],
+        "evidence_refs": [
+          "source-guide"
+        ]
+      },
+      "expected_normalized": {
+        "practitioner_npi": "1000000004",
+        "location_id": "NORTH",
+        "office_end": "2027-03-02",
+        "credentialing_end": "2027-12-31"
+      },
+      "evidence": {
+        "source-guide": "Original synthetic guide: Individual is practitioner NPI; Facility is office key. Term Date is office departure, supplied DD/MM/YYYY. Provider End is credentialing end supplied YYYY-MM-DD. Neither implies an unscoped network termination."
+      },
+      "counter": {
+        "csv": "Individual,Facility,Term Date,Provider End\n1000000004,NORTH,99/99/2027,2027-12-31\n",
+        "source": "synthetic-termination-scope",
+        "source_version": null,
+        "expected_status": "exact",
+        "expected_finding": "invalid_transform"
+      }
+    },
+    {
+      "id": "conditional-group-id",
+      "source": "synthetic-conditional-group-id",
+      "focus": "Correct an overbroad local group identifier requirement",
+      "seed": {
+        "csv": "Practitioner NPI,Office ID,Entity Class,Group NPI\n1000000004,NORTH,SOLO,\n",
+        "source_version": null,
+        "definition": {
+          "version": 1,
+          "source": "synthetic-conditional-group-id",
+          "payer": null,
+          "network": null,
+          "source_version": null,
+          "contract": "payer-network-roster/1",
+          "grain": "practitioner_office",
+          "headers": [
+            "Practitioner NPI",
+            "Office ID",
+            "Entity Class",
+            "Group NPI"
+          ],
+          "mapping": {
+            "practitioner_npi": "Practitioner NPI",
+            "location_id": "Office ID",
+            "entity_class": "Entity Class",
+            "group_npi": "Group NPI"
+          },
+          "transforms": {},
+          "required": [
+            "practitioner_npi",
+            "location_id",
+            "group_npi"
+          ],
+          "evidence_refs": [
+            "source-guide"
+          ]
+        },
+        "expected_finding": "required"
+      },
+      "changed": {
+        "csv": "Professional ID,Service Site,Provider Kind,Organization ID\n1000000004,NORTH,solo,\n",
+        "source_version": null
+      },
+      "repeat": {
+        "csv": "Professional ID,Service Site,Provider Kind,Organization ID\n1000000004,NORTH,solo,\n",
+        "source_version": null
+      },
+      "reviewed_definition": {
+        "version": 1,
+        "source": "synthetic-conditional-group-id",
+        "payer": null,
+        "network": null,
+        "source_version": null,
+        "contract": "payer-network-roster/1",
+        "grain": "practitioner_office",
+        "headers": [
+          "Professional ID",
+          "Service Site",
+          "Provider Kind",
+          "Organization ID"
+        ],
+        "mapping": {
+          "practitioner_npi": "Professional ID",
+          "location_id": "Service Site",
+          "entity_class": "Provider Kind",
+          "group_npi": "Organization ID"
+        },
+        "transforms": {
+          "entity_class": [
+            "uppercase"
+          ]
+        },
+        "required": [
+          "practitioner_npi",
+          "location_id"
+        ],
+        "evidence_refs": [
+          "source-guide"
+        ],
+        "required_when": [
+          {
+            "field": "entity_class",
+            "equals": "GROUP",
+            "require": [
+              "group_npi"
+            ]
+          }
+        ]
+      },
+      "expected_normalized": {
+        "practitioner_npi": "1000000004",
+        "location_id": "NORTH",
+        "entity_class": "SOLO",
+        "group_npi": ""
+      },
+      "evidence": {
+        "source-guide": "Original synthetic guide: Professional ID is practitioner NPI and Service Site is office key. Provider Kind uppercase GROUP requires Organization ID as group NPI. SOLO does not require a group identifier. Preserve supplied values and do not invent one."
+      },
+      "counter": {
+        "csv": "Professional ID,Service Site,Provider Kind,Organization ID\n1000000004,NORTH,solo,\n",
+        "source": "synthetic-conditional-group-id-unrelated",
+        "source_version": null,
+        "expected_status": "unknown"
+      }
+    },
+    {
+      "id": "delta-actions",
+      "source": "synthetic-delta-actions",
+      "focus": "Record update intent without treating omitted rows as terminations",
+      "seed": {
+        "csv": "Practitioner NPI,Office ID,Action\n1000000004,NORTH,UPDATE\n",
+        "source_version": null,
+        "definition": {
+          "version": 1,
+          "source": "synthetic-delta-actions",
+          "payer": null,
+          "network": null,
+          "source_version": null,
+          "contract": "payer-network-roster/1",
+          "grain": "practitioner_office",
+          "headers": [
+            "Practitioner NPI",
+            "Office ID",
+            "Action"
+          ],
+          "mapping": {
+            "practitioner_npi": "Practitioner NPI",
+            "location_id": "Office ID",
+            "record_action": "Action"
+          },
+          "transforms": {},
+          "required": [
+            "practitioner_npi",
+            "location_id"
+          ],
+          "evidence_refs": [
+            "source-guide"
+          ]
+        }
+      },
+      "changed": {
+        "csv": "Provider ID,Office Code,Change\n1000000004,NORTH,U\n",
+        "source_version": null,
+        "completeness": "delta"
+      },
+      "repeat": {
+        "csv": "Provider ID,Office Code,Change\n1000000004,NORTH,U\n",
+        "source_version": null,
+        "completeness": "delta"
+      },
+      "reviewed_definition": {
+        "version": 1,
+        "source": "synthetic-delta-actions",
+        "payer": null,
+        "network": null,
+        "source_version": null,
+        "contract": "payer-network-roster/1",
+        "grain": "practitioner_office",
+        "headers": [
+          "Provider ID",
+          "Office Code",
+          "Change"
+        ],
+        "mapping": {
+          "practitioner_npi": "Provider ID",
+          "location_id": "Office Code",
+          "record_action": "Change"
+        },
+        "transforms": {
+          "record_action": [
+            {
+              "op": "value_map",
+              "values": {
+                "U": "update",
+                "A": "add",
+                "T": "terminate"
+              }
+            }
+          ]
+        },
+        "required": [
+          "practitioner_npi",
+          "location_id"
+        ],
+        "evidence_refs": [
+          "source-guide"
+        ]
+      },
+      "expected_normalized": {
+        "practitioner_npi": "1000000004",
+        "location_id": "NORTH",
+        "record_action": "update"
+      },
+      "evidence": {
+        "source-guide": "Original synthetic guide: Provider ID is practitioner NPI; Office Code is office key. This is a changes-only delivery. Change U means update, A add, T explicit source termination request. Absence is not a termination and no action grants verified participation."
+      },
+      "counter": {
+        "csv": "Provider ID,Office Code,Change\n1000000004,NORTH,U\n",
+        "source": "synthetic-delta-actions-unrelated",
+        "source_version": null,
+        "expected_status": "unknown"
+      }
+    },
+    {
+      "id": "document-version",
+      "source": "synthetic-document-version",
+      "focus": "Same shape under changed source meaning requires a new reviewed version",
+      "seed": {
+        "csv": "NPI,Site,Directory Flag\n1000000004,NORTH,Y\n",
+        "source_version": "v1",
+        "definition": {
+          "version": 1,
+          "source": "synthetic-document-version",
+          "payer": null,
+          "network": null,
+          "source_version": "v1",
+          "contract": "payer-network-roster/1",
+          "grain": "practitioner_office",
+          "headers": [
+            "NPI",
+            "Site",
+            "Directory Flag"
+          ],
+          "mapping": {
+            "practitioner_npi": "NPI",
+            "location_id": "Site",
+            "directory_visible": "Directory Flag"
+          },
+          "transforms": {
+            "directory_visible": [
+              {
+                "op": "value_map",
+                "values": {
+                  "Y": false,
+                  "N": true
+                }
+              }
+            ]
+          },
+          "required": [
+            "practitioner_npi",
+            "location_id"
+          ],
+          "evidence_refs": [
+            "source-guide"
+          ]
+        }
+      },
+      "changed": {
+        "csv": "NPI,Site,Directory Flag\n1000000004,NORTH,Y\n",
+        "source_version": "v2"
+      },
+      "repeat": {
+        "csv": "NPI,Site,Directory Flag\n1000000004,NORTH,Y\n",
+        "source_version": "v2"
+      },
+      "reviewed_definition": {
+        "version": 1,
+        "source": "synthetic-document-version",
+        "payer": null,
+        "network": null,
+        "source_version": "v2",
+        "contract": "payer-network-roster/1",
+        "grain": "practitioner_office",
+        "headers": [
+          "NPI",
+          "Site",
+          "Directory Flag"
+        ],
+        "mapping": {
+          "practitioner_npi": "NPI",
+          "location_id": "Site",
+          "directory_visible": "Directory Flag"
+        },
+        "transforms": {
+          "directory_visible": [
+            {
+              "op": "value_map",
+              "values": {
+                "Y": true,
+                "N": false
+              }
+            }
+          ]
+        },
+        "required": [
+          "practitioner_npi",
+          "location_id"
+        ],
+        "evidence_refs": [
+          "source-guide"
+        ]
+      },
+      "expected_normalized": {
+        "practitioner_npi": "1000000004",
+        "location_id": "NORTH",
+        "directory_visible": true
+      },
+      "evidence": {
+        "source-guide": "Original synthetic source-guide v2: NPI is practitioner and Site is office key. Directory Flag Y now means display and N exclude. Prior source-guide v1 used inverse polarity. Version change must be reviewed despite identical columns."
+      },
+      "counter": {
+        "csv": "NPI,Site,Directory Flag\n1000000004,NORTH,Y\n",
+        "source": "synthetic-document-version",
+        "source_version": "v3",
+        "expected_status": "unknown"
+      }
+    }
+  ]
+}

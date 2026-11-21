@@ -1,0 +1,1293 @@
+{
+  "format_version": 1,
+  "corpus_manifest": {
+    "format_version": 1,
+    "file": "adaptation-v1.json",
+    "sha256": "a2b82bdf550ab5ed4f6d82a768e90d5ac0dfca28790ccc12dad9258d2bc48ec2",
+    "families": 6,
+    "deliveries": 24
+  },
+  "synthetic": true,
+  "families": 6,
+  "deliveries": 24,
+  "outcomes": [
+    {
+      "family_id": "directory-exclusion",
+      "focus": "Source-specific directory polarity",
+      "cold_recognition": {
+        "status": "unknown",
+        "catalog_revision": 1,
+        "candidates": [],
+        "selected_id": null,
+        "notice": "Source-schema recognition is separate from validity, approval and real-world participation."
+      },
+      "cold_modes": {
+        "fixed_heuristics": {
+          "proposal": {
+            "id": "e3d3f266979bcf09a466cbff4d0b43c76ec9ddfc27c0bdbf9c6fe386ecb69867",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "ee11e126434202dfeb0e978a1e491ba525d29729e6301262faa386147a443294",
+            "input_signature": "3df604248150d31147f000b25df82bfb825333fb8e6478f79234554fd6aba9a3",
+            "context": {
+              "source": "synthetic-directory-exclusion",
+              "delivery_id": "directory-exclusion-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 0,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Directory Flag",
+                "NPI",
+                "Site"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-directory-exclusion",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "directory_visible",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "directory_visible"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "directory_visible"
+            ],
+            "corrections_required": 6,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        },
+        "reviewed_catalog": {
+          "proposal": {
+            "id": "40ddf55ef3297488b30231ad9ce45c0974c82a65d5a69db9fae38825ecb8e4f1",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "ee11e126434202dfeb0e978a1e491ba525d29729e6301262faa386147a443294",
+            "input_signature": "3df604248150d31147f000b25df82bfb825333fb8e6478f79234554fd6aba9a3",
+            "context": {
+              "source": "synthetic-directory-exclusion",
+              "delivery_id": "directory-exclusion-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 1,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Directory Flag",
+                "NPI",
+                "Site"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-directory-exclusion",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "directory_visible",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "directory_visible"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "directory_visible"
+            ],
+            "corrections_required": 6,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        }
+      },
+      "model": {
+        "state": "not_requested",
+        "invocations_attempted": 0
+      },
+      "scripted_review_preview": {
+        "binding_errors": [],
+        "transform_errors": [],
+        "rule_errors": [],
+        "cleaned_value_errors": [],
+        "corrections_required": 0,
+        "expected_cleaned_values": 3,
+        "wrong_semantic_values": [],
+        "notice": "Script-scored field/rule differences, not observed human review time."
+      },
+      "after_review": {
+        "recognition": "exact",
+        "model_enabled": false,
+        "catalog": {
+          "binding_errors": [],
+          "transform_errors": [],
+          "rule_errors": [],
+          "cleaned_value_errors": [],
+          "corrections_required": 0,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        },
+        "fixed_heuristics": {
+          "binding_errors": [
+            "directory_visible",
+            "location_id",
+            "practitioner_npi"
+          ],
+          "transform_errors": [
+            "directory_visible"
+          ],
+          "rule_errors": [
+            "grain",
+            "required"
+          ],
+          "cleaned_value_errors": [
+            "practitioner_npi",
+            "location_id",
+            "directory_visible"
+          ],
+          "corrections_required": 6,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        }
+      },
+      "counterexample": {
+        "expected": "unknown",
+        "observed": "unknown",
+        "findings": {},
+        "passed": true
+      },
+      "catalog_reviews": 2,
+      "operational_approvals": 0
+    },
+    {
+      "family_id": "identifier-roles",
+      "focus": "Rendering and billing identifiers remain distinct",
+      "cold_recognition": {
+        "status": "unknown",
+        "catalog_revision": 1,
+        "candidates": [],
+        "selected_id": null,
+        "notice": "Source-schema recognition is separate from validity, approval and real-world participation."
+      },
+      "cold_modes": {
+        "fixed_heuristics": {
+          "proposal": {
+            "id": "d05c778d3b995a99a48beb7e63edc7258ec01dffea3899e81ae1e30fbc924a4d",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "d7184701b72f1d12fe9fb87574ca14e60911f945c78795d9f9bfbbf668b7d51a",
+            "input_signature": "c130dba01dbaf2b6228d21c6cb5da026345918485b944dd1e848c8d2d672d17c",
+            "context": {
+              "source": "synthetic-identifier-roles",
+              "delivery_id": "identifier-roles-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 0,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Clinician Key",
+                "Invoice NPI",
+                "Practice"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-identifier-roles",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "billing_npi",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "billing_npi",
+              "location_id"
+            ],
+            "corrections_required": 5,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        },
+        "reviewed_catalog": {
+          "proposal": {
+            "id": "d000676787868e11339331d3d14e0d35a8f4d52bd0c2c8e2520a520d7617c333",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "d7184701b72f1d12fe9fb87574ca14e60911f945c78795d9f9bfbbf668b7d51a",
+            "input_signature": "c130dba01dbaf2b6228d21c6cb5da026345918485b944dd1e848c8d2d672d17c",
+            "context": {
+              "source": "synthetic-identifier-roles",
+              "delivery_id": "identifier-roles-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 1,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Clinician Key",
+                "Invoice NPI",
+                "Practice"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-identifier-roles",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "billing_npi",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "billing_npi",
+              "location_id"
+            ],
+            "corrections_required": 5,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        }
+      },
+      "model": {
+        "state": "not_requested",
+        "invocations_attempted": 0
+      },
+      "scripted_review_preview": {
+        "binding_errors": [],
+        "transform_errors": [],
+        "rule_errors": [],
+        "cleaned_value_errors": [],
+        "corrections_required": 0,
+        "expected_cleaned_values": 3,
+        "wrong_semantic_values": [],
+        "notice": "Script-scored field/rule differences, not observed human review time."
+      },
+      "after_review": {
+        "recognition": "exact",
+        "model_enabled": false,
+        "catalog": {
+          "binding_errors": [],
+          "transform_errors": [],
+          "rule_errors": [],
+          "cleaned_value_errors": [],
+          "corrections_required": 0,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        },
+        "fixed_heuristics": {
+          "binding_errors": [
+            "billing_npi",
+            "location_id",
+            "practitioner_npi"
+          ],
+          "transform_errors": [],
+          "rule_errors": [
+            "grain",
+            "required"
+          ],
+          "cleaned_value_errors": [
+            "practitioner_npi",
+            "billing_npi",
+            "location_id"
+          ],
+          "corrections_required": 5,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        }
+      },
+      "counterexample": {
+        "expected": "unknown",
+        "observed": "unknown",
+        "findings": {},
+        "passed": true
+      },
+      "catalog_reviews": 2,
+      "operational_approvals": 0
+    },
+    {
+      "family_id": "termination-scope",
+      "focus": "Office departure differs from credentialing end; dates are explicit",
+      "cold_recognition": {
+        "status": "unknown",
+        "catalog_revision": 1,
+        "candidates": [],
+        "selected_id": null,
+        "notice": "Source-schema recognition is separate from validity, approval and real-world participation."
+      },
+      "cold_modes": {
+        "fixed_heuristics": {
+          "proposal": {
+            "id": "4d346029538f42768add811c647a602645d1b20a269673d31ab11b7cbaef2ff4",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "67b3c9faa41b0a6c651bcf10ede80bbced99e11560c9afe9c22c9b11872fcc4f",
+            "input_signature": "513d69ab49561b4136c5d1eb4612d619c5732acd0b0024a99cc430d5afc24c41",
+            "context": {
+              "source": "synthetic-termination-scope",
+              "delivery_id": "termination-scope-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 0,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Facility",
+                "Individual",
+                "Provider End",
+                "Term Date"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-termination-scope",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "credentialing_end",
+              "location_id",
+              "office_end",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "office_end"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "office_end",
+              "credentialing_end"
+            ],
+            "corrections_required": 7,
+            "expected_cleaned_values": 4,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        },
+        "reviewed_catalog": {
+          "proposal": {
+            "id": "744a194f91b35eaac703ff3dbfabb9fb906e0121f67f7720e95b23bb20ab9554",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "67b3c9faa41b0a6c651bcf10ede80bbced99e11560c9afe9c22c9b11872fcc4f",
+            "input_signature": "513d69ab49561b4136c5d1eb4612d619c5732acd0b0024a99cc430d5afc24c41",
+            "context": {
+              "source": "synthetic-termination-scope",
+              "delivery_id": "termination-scope-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 1,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Facility",
+                "Individual",
+                "Provider End",
+                "Term Date"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-termination-scope",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "credentialing_end",
+              "location_id",
+              "office_end",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "office_end"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "office_end",
+              "credentialing_end"
+            ],
+            "corrections_required": 7,
+            "expected_cleaned_values": 4,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        }
+      },
+      "model": {
+        "state": "not_requested",
+        "invocations_attempted": 0
+      },
+      "scripted_review_preview": {
+        "binding_errors": [],
+        "transform_errors": [],
+        "rule_errors": [],
+        "cleaned_value_errors": [],
+        "corrections_required": 0,
+        "expected_cleaned_values": 4,
+        "wrong_semantic_values": [],
+        "notice": "Script-scored field/rule differences, not observed human review time."
+      },
+      "after_review": {
+        "recognition": "exact",
+        "model_enabled": false,
+        "catalog": {
+          "binding_errors": [],
+          "transform_errors": [],
+          "rule_errors": [],
+          "cleaned_value_errors": [],
+          "corrections_required": 0,
+          "expected_cleaned_values": 4,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        },
+        "fixed_heuristics": {
+          "binding_errors": [
+            "credentialing_end",
+            "location_id",
+            "office_end",
+            "practitioner_npi"
+          ],
+          "transform_errors": [
+            "office_end"
+          ],
+          "rule_errors": [
+            "grain",
+            "required"
+          ],
+          "cleaned_value_errors": [
+            "practitioner_npi",
+            "location_id",
+            "office_end",
+            "credentialing_end"
+          ],
+          "corrections_required": 7,
+          "expected_cleaned_values": 4,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        }
+      },
+      "counterexample": {
+        "expected": "exact",
+        "observed": "exact",
+        "findings": {
+          "invalid_transform": 1,
+          "unresolved_date_format": 1,
+          "invalid_calendar_date": 1,
+          "network_scope_unresolved": 1,
+          "participation_status_unresolved": 1
+        },
+        "passed": true
+      },
+      "catalog_reviews": 2,
+      "operational_approvals": 0
+    },
+    {
+      "family_id": "conditional-group-id",
+      "focus": "Correct an overbroad local group identifier requirement",
+      "cold_recognition": {
+        "status": "unknown",
+        "catalog_revision": 1,
+        "candidates": [],
+        "selected_id": null,
+        "notice": "Source-schema recognition is separate from validity, approval and real-world participation."
+      },
+      "cold_modes": {
+        "fixed_heuristics": {
+          "proposal": {
+            "id": "45f0e52f1e5bfff531aa7f53c165cc9667e8e1ee210984b4107fc055bb7135dd",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "a4f13ccb045919acb436cb3324dabe473dc9412d89eb6950e25ed798001ca05c",
+            "input_signature": "0d793e2604852258491efa73321851f7b7a2856ed5375042b70adda4e3442115",
+            "context": {
+              "source": "synthetic-conditional-group-id",
+              "delivery_id": "conditional-group-id-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 0,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Organization ID",
+                "Professional ID",
+                "Provider Kind",
+                "Service Site"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-conditional-group-id",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "entity_class",
+              "group_npi",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "entity_class"
+            ],
+            "rule_errors": [
+              "grain",
+              "required",
+              "required_when"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "entity_class",
+              "group_npi"
+            ],
+            "corrections_required": 8,
+            "expected_cleaned_values": 4,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        },
+        "reviewed_catalog": {
+          "proposal": {
+            "id": "b26f15c4f1365900e3361529f38bc7a2fae1b01a076396076f8234e9e10c21a6",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "a4f13ccb045919acb436cb3324dabe473dc9412d89eb6950e25ed798001ca05c",
+            "input_signature": "0d793e2604852258491efa73321851f7b7a2856ed5375042b70adda4e3442115",
+            "context": {
+              "source": "synthetic-conditional-group-id",
+              "delivery_id": "conditional-group-id-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": null
+            },
+            "catalog_revision": 1,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Organization ID",
+                "Professional ID",
+                "Provider Kind",
+                "Service Site"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-conditional-group-id",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "entity_class",
+              "group_npi",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "entity_class"
+            ],
+            "rule_errors": [
+              "grain",
+              "required",
+              "required_when"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "entity_class",
+              "group_npi"
+            ],
+            "corrections_required": 8,
+            "expected_cleaned_values": 4,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        }
+      },
+      "model": {
+        "state": "not_requested",
+        "invocations_attempted": 0
+      },
+      "scripted_review_preview": {
+        "binding_errors": [],
+        "transform_errors": [],
+        "rule_errors": [],
+        "cleaned_value_errors": [],
+        "corrections_required": 0,
+        "expected_cleaned_values": 4,
+        "wrong_semantic_values": [],
+        "notice": "Script-scored field/rule differences, not observed human review time."
+      },
+      "after_review": {
+        "recognition": "exact",
+        "model_enabled": false,
+        "catalog": {
+          "binding_errors": [],
+          "transform_errors": [],
+          "rule_errors": [],
+          "cleaned_value_errors": [],
+          "corrections_required": 0,
+          "expected_cleaned_values": 4,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        },
+        "fixed_heuristics": {
+          "binding_errors": [
+            "entity_class",
+            "group_npi",
+            "location_id",
+            "practitioner_npi"
+          ],
+          "transform_errors": [
+            "entity_class"
+          ],
+          "rule_errors": [
+            "grain",
+            "required",
+            "required_when"
+          ],
+          "cleaned_value_errors": [
+            "practitioner_npi",
+            "location_id",
+            "entity_class",
+            "group_npi"
+          ],
+          "corrections_required": 8,
+          "expected_cleaned_values": 4,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        }
+      },
+      "counterexample": {
+        "expected": "unknown",
+        "observed": "unknown",
+        "findings": {},
+        "passed": true
+      },
+      "catalog_reviews": 2,
+      "operational_approvals": 0
+    },
+    {
+      "family_id": "delta-actions",
+      "focus": "Record update intent without treating omitted rows as terminations",
+      "cold_recognition": {
+        "status": "unknown",
+        "catalog_revision": 1,
+        "candidates": [],
+        "selected_id": null,
+        "notice": "Source-schema recognition is separate from validity, approval and real-world participation."
+      },
+      "cold_modes": {
+        "fixed_heuristics": {
+          "proposal": {
+            "id": "7667e5df7645a8dfb1b644c0bf5bc1510de7ded61a9b0bcf1842ede7cc9013ef",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "e591d4297ad0f07f86d229b7a1d67bca00197efcc185e61cce665ac5d8374dbf",
+            "input_signature": "5a1eb1bf9ab382443984119abf305bf4c190aa40a32c7cbb2fc2028e3b08887c",
+            "context": {
+              "source": "synthetic-delta-actions",
+              "delivery_id": "delta-actions-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "delta",
+              "source_version": null
+            },
+            "catalog_revision": 0,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Change",
+                "Office Code",
+                "Provider ID"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-delta-actions",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "location_id",
+              "practitioner_npi",
+              "record_action"
+            ],
+            "transform_errors": [
+              "record_action"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "record_action"
+            ],
+            "corrections_required": 6,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        },
+        "reviewed_catalog": {
+          "proposal": {
+            "id": "fa176b887004dce05393b2385fc1d8419b0e7018ef4f01a78bdf69bce1d95163",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "e591d4297ad0f07f86d229b7a1d67bca00197efcc185e61cce665ac5d8374dbf",
+            "input_signature": "5a1eb1bf9ab382443984119abf305bf4c190aa40a32c7cbb2fc2028e3b08887c",
+            "context": {
+              "source": "synthetic-delta-actions",
+              "delivery_id": "delta-actions-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "delta",
+              "source_version": null
+            },
+            "catalog_revision": 1,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Change",
+                "Office Code",
+                "Provider ID"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-delta-actions",
+              "source_notes": {},
+              "source_version": null,
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "location_id",
+              "practitioner_npi",
+              "record_action"
+            ],
+            "transform_errors": [
+              "record_action"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "record_action"
+            ],
+            "corrections_required": 6,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        }
+      },
+      "model": {
+        "state": "not_requested",
+        "invocations_attempted": 0
+      },
+      "scripted_review_preview": {
+        "binding_errors": [],
+        "transform_errors": [],
+        "rule_errors": [],
+        "cleaned_value_errors": [],
+        "corrections_required": 0,
+        "expected_cleaned_values": 3,
+        "wrong_semantic_values": [],
+        "notice": "Script-scored field/rule differences, not observed human review time."
+      },
+      "after_review": {
+        "recognition": "exact",
+        "model_enabled": false,
+        "catalog": {
+          "binding_errors": [],
+          "transform_errors": [],
+          "rule_errors": [],
+          "cleaned_value_errors": [],
+          "corrections_required": 0,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        },
+        "fixed_heuristics": {
+          "binding_errors": [
+            "location_id",
+            "practitioner_npi",
+            "record_action"
+          ],
+          "transform_errors": [
+            "record_action"
+          ],
+          "rule_errors": [
+            "grain",
+            "required"
+          ],
+          "cleaned_value_errors": [
+            "practitioner_npi",
+            "location_id",
+            "record_action"
+          ],
+          "corrections_required": 6,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        }
+      },
+      "counterexample": {
+        "expected": "unknown",
+        "observed": "unknown",
+        "findings": {},
+        "passed": true
+      },
+      "catalog_reviews": 2,
+      "operational_approvals": 0
+    },
+    {
+      "family_id": "document-version",
+      "focus": "Same shape under changed source meaning requires a new reviewed version",
+      "cold_recognition": {
+        "status": "unknown",
+        "catalog_revision": 1,
+        "candidates": [
+          {
+            "variant_id": "a864d35a7264885e188530eb520d15bab3a441c0ac3e119a8f0697124ddf070d",
+            "contract": "payer-network-roster/1",
+            "match": "source_version_changed",
+            "rank_score": 1.0,
+            "missing_fields": [],
+            "added_fields": [],
+            "evidence_refs": [
+              "source-guide"
+            ]
+          }
+        ],
+        "selected_id": null,
+        "notice": "Source-schema recognition is separate from validity, approval and real-world participation."
+      },
+      "cold_modes": {
+        "fixed_heuristics": {
+          "proposal": {
+            "id": "4bee353a2a1dc5b1e6da3c694927d02f7cd84d5b528159074ab0726898b82b73",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "ee11e126434202dfeb0e978a1e491ba525d29729e6301262faa386147a443294",
+            "input_signature": "3df604248150d31147f000b25df82bfb825333fb8e6478f79234554fd6aba9a3",
+            "context": {
+              "source": "synthetic-document-version",
+              "delivery_id": "document-version-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": "v2"
+            },
+            "catalog_revision": 0,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Directory Flag",
+                "NPI",
+                "Site"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-document-version",
+              "source_notes": {},
+              "source_version": "v2",
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "directory_visible",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "directory_visible"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "directory_visible"
+            ],
+            "corrections_required": 6,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        },
+        "reviewed_catalog": {
+          "proposal": {
+            "id": "30775df366cc1ab31f6a4161e098df8dbd0eac43036ac3076a51bfb387aef807",
+            "version": 1,
+            "kind": "new_variant",
+            "artifact_sha256": "ee11e126434202dfeb0e978a1e491ba525d29729e6301262faa386147a443294",
+            "input_signature": "3df604248150d31147f000b25df82bfb825333fb8e6478f79234554fd6aba9a3",
+            "context": {
+              "source": "synthetic-document-version",
+              "delivery_id": "document-version-changed",
+              "payer": null,
+              "network": null,
+              "completeness": "unknown",
+              "source_version": "v2"
+            },
+            "catalog_revision": 1,
+            "variant": {
+              "contract": "payer-network-roster/1",
+              "evidence_refs": [],
+              "grain": "source_declared",
+              "headers": [
+                "Directory Flag",
+                "NPI",
+                "Site"
+              ],
+              "ignored_fields": [],
+              "mapping": {},
+              "network": null,
+              "payer": null,
+              "required": [],
+              "required_when": [],
+              "settings": {
+                "delimiter": ",",
+                "encoding": "utf-8-sig"
+              },
+              "source": "synthetic-document-version",
+              "source_notes": {},
+              "source_version": "v2",
+              "transforms": {},
+              "version": 1
+            },
+            "evidence_refs": []
+          },
+          "score": {
+            "binding_errors": [
+              "directory_visible",
+              "location_id",
+              "practitioner_npi"
+            ],
+            "transform_errors": [
+              "directory_visible"
+            ],
+            "rule_errors": [
+              "grain",
+              "required"
+            ],
+            "cleaned_value_errors": [
+              "practitioner_npi",
+              "location_id",
+              "directory_visible"
+            ],
+            "corrections_required": 6,
+            "expected_cleaned_values": 3,
+            "wrong_semantic_values": [],
+            "notice": "Script-scored field/rule differences, not observed human review time."
+          }
+        }
+      },
+      "model": {
+        "state": "not_requested",
+        "invocations_attempted": 0
+      },
+      "scripted_review_preview": {
+        "binding_errors": [],
+        "transform_errors": [],
+        "rule_errors": [],
+        "cleaned_value_errors": [],
+        "corrections_required": 0,
+        "expected_cleaned_values": 3,
+        "wrong_semantic_values": [],
+        "notice": "Script-scored field/rule differences, not observed human review time."
+      },
+      "after_review": {
+        "recognition": "exact",
+        "model_enabled": false,
+        "catalog": {
+          "binding_errors": [],
+          "transform_errors": [],
+          "rule_errors": [],
+          "cleaned_value_errors": [],
+          "corrections_required": 0,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        },
+        "fixed_heuristics": {
+          "binding_errors": [
+            "directory_visible",
+            "location_id",
+            "practitioner_npi"
+          ],
+          "transform_errors": [
+            "directory_visible"
+          ],
+          "rule_errors": [
+            "grain",
+            "required"
+          ],
+          "cleaned_value_errors": [
+            "practitioner_npi",
+            "location_id",
+            "directory_visible"
+          ],
+          "corrections_required": 6,
+          "expected_cleaned_values": 3,
+          "wrong_semantic_values": [],
+          "notice": "Script-scored field/rule differences, not observed human review time."
+        }
+      },
+      "counterexample": {
+        "expected": "unknown",
+        "observed": "unknown",
+        "findings": {},
+        "passed": true
+      },
+      "catalog_reviews": 2,
+      "operational_approvals": 0
+    }
+  ],
+  "summary": {
+    "fixed_heuristics_repeat_corrections": 38,
+    "catalog_repeat_corrections": 0,
+    "catalog_repeat_wrong_semantic_values": 0,
+    "counterexamples_passed": 6,
+    "counterexamples_total": 6,
+    "model_invocations_attempted": 0
+  },
+  "model_condition": "not_requested",
+  "passed": true,
+  "notice": "Frozen synthetic engineering experiment with scripted reviews; no population accuracy, actual-model benefit without real calls, or human time-saving claim."
+}

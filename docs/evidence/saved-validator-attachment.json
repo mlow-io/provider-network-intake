@@ -1,0 +1,32 @@
+{
+  "provenance": "Attachment of a saved real validator run from the source Workbench; not a new JVM invocation",
+  "input_sha256": "3b01a66d81d89565223f8c0bd61cf616511713a5375c714d4efcd011bc29a6eb",
+  "report_sha256": "8dc88ef46fcf1bc89abded1cf696c6d8a8ded217b3aabf8f580e39725cde947c",
+  "binary_sha256": "9dfe9f305b0f9389eceade2a4a1c9a2740d7b0e614066fdf07a78b571c76d92f",
+  "layers": {
+    "decode": "passed",
+    "policy": "incomplete",
+    "profile": "failed",
+    "relationships": "failed",
+    "source_contract": "incomplete",
+    "structure": "incomplete",
+    "terminology": "incomplete"
+  },
+  "issue_counts": {
+    "fatal": 0,
+    "error": 4,
+    "warning": 11,
+    "information": 2
+  },
+  "eligibility": {
+    "approved": false,
+    "policy": "participation_export/1",
+    "reasons": [
+      "dataset_acceptance_required",
+      "native_reference_only",
+      "profile_failed"
+    ],
+    "state": "held"
+  },
+  "package_hash_scope": "metadata_only"
+}

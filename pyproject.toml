@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "provider-network-intake"
+version = "0.1.0"
+description = "Evidence-preserving provider roster interpretation and reviewed source-schema adaptation."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp>=1.14,<2"]
+workbench = ["fastapi>=0.115,<1"]
+dev = ["pytest>=8,<10", "ruff>=0.9", "mypy>=1.15", "build>=1.2"]
+
+[project.scripts]
+network-intake = "provider_network_intake.cli:main"
+network-intake-mcp = "provider_network_intake.mcp_server:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+provider_network_intake = ["py.typed", "assets/*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["provider_network_intake"]
+mypy_path = "src"
