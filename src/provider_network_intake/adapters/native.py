@@ -6,6 +6,7 @@ import re
 from dataclasses import asdict
 from typing import Any
 
+from ..contracts import is_valid_npi
 from ..errors import IntakeError, ResourceLimit
 from ..jsonio import bytes_digest, loads, walk
 from ..models import Finding, Findings, Inspection, SourceContext
@@ -79,7 +80,16 @@ def preview(
                         "invalid_npi_shape",
                         "structure",
                         locator,
-                        "Provider NPI requires ten digits; registry existence/checksum not assessed",
+                        "Provider NPI requires ten digits; registry existence not assessed",
+                    )
+                )
+            elif not is_valid_npi(npi):
+                findings.add(
+                    Finding(
+                        "invalid_npi_checksum",
+                        "structure",
+                        locator,
+                        "Provider NPI fails CMS Luhn check-digit validation; registry existence not assessed",
                     )
                 )
             locations = []

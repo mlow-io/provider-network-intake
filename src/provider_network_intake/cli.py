@@ -13,7 +13,7 @@ from .catalog_store import CatalogSnapshot, CatalogStore
 from .demo import run_demo
 from .engine import Engine
 from .errors import IntakeError, ResourceLimit
-from .exports import read_bundle, write_full_bundle
+from .exports import markdown_report, read_bundle, write_full_bundle
 from .jsonio import MAX_BYTES, loads
 from .models import SourceContext
 from .recipes import Variant
@@ -28,9 +28,12 @@ def _read(path: Path, maximum: int = MAX_BYTES) -> bytes:
 
 
 def _emit(value: Any, path: Path | None) -> None:
-    content = (
-        json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False) + "\n"
-    )
+    if isinstance(value, str):
+        content = value if value.endswith("\n") else value + "\n"
+    else:
+        content = (
+            json.dumps(value, ensure_ascii=False, sort_keys=True, indent=2, allow_nan=False) + "\n"
+        )
     if path is None:
         print(content, end="")
     else:
@@ -52,7 +55,7 @@ def parser() -> argparse.ArgumentParser:
     evaluation.add_argument("--root", type=Path, required=True)
     evaluation.add_argument("--invoke-model", action="store_true")
     evaluation.add_argument("--model")
-    for name in ("inspect", "recognize", "propose", "preview", "export", "assist"):
+    for name in ("inspect", "recognize", "propose", "preview", "export", "report", "assist"):
         command = commands.add_parser(name)
         command.add_argument("file", type=Path)
         command.add_argument("--source", required=True)
@@ -66,9 +69,13 @@ def parser() -> argparse.ArgumentParser:
         command.add_argument("--format", choices=["csv", "nppes", "plannet"], default="csv")
         command.add_argument("--catalog", type=Path)
         command.add_argument("--output", type=Path)
-        if name in {"propose", "preview", "export"}:
+        if name in {"propose", "preview", "export", "report"}:
             command.add_argument("--definition", type=Path)
             command.add_argument("--proposal", type=Path)
+        if name == "report":
+            command.add_argument(
+                "--report-format", choices=["markdown", "json"], default="markdown"
+            )
         if name == "propose":
             command.add_argument("--save", action="store_true")
             command.add_argument("--request-id")
@@ -83,6 +90,10 @@ def parser() -> argparse.ArgumentParser:
                 help="JSON object of curated reference IDs to excerpts",
             )
             command.add_argument("--model", required=True)
+            command.add_argument(
+                "--base-url",
+                help="Optional OpenAI-compatible /v1 endpoint (e.g. http://127.0.0.1:11434/v1 for local Ollama)",
+            )
             command.add_argument("--allow-external-processing", action="store_true")
             command.add_argument("--journal", type=Path, required=True)
             command.add_argument("--request-id", required=True)
@@ -156,8 +167,8 @@ def execute(args: argparse.Namespace) -> tuple[Any, int]:
     if args.command == "recognize":
         return recognition.to_dict(), 0
     if args.command == "assist":
-        from .assistance import ResponsesProvider
-        from .invocations import InvocationJournal, run_assistance
+        from .assistance import OpenAICompatibleProvider, ResponsesProvider
+        from .invocations import InvocationJournal, ProposalProvider, run_assistance
 
         if args.output is None:
             raise IntakeError(
@@ -168,7 +179,17 @@ def execute(args: argparse.Namespace) -> tuple[Any, int]:
         evidence = loads(_read(args.evidence, 16384), max_bytes=16384)
         if not isinstance(evidence, dict):
             raise IntakeError("Evidence must be a JSON reference/excerpt object")
-        provider = ResponsesProvider(api_key=os.environ.get("OPENAI_API_KEY", ""), model=args.model)
+        provider: ProposalProvider
+        if getattr(args, "base_url", None):
+            provider = OpenAICompatibleProvider(
+                base_url=args.base_url,
+                model=args.model,
+                api_key=os.environ.get("OPENAI_API_KEY"),
+            )
+        else:
+            provider = ResponsesProvider(
+                api_key=os.environ.get("OPENAI_API_KEY", ""), model=args.model
+            )
         run = run_assistance(
             InvocationJournal(args.journal),
             request_id=args.request_id,
@@ -245,6 +266,11 @@ def execute(args: argparse.Namespace) -> tuple[Any, int]:
             format_hint=args.format,
             history=history,
             include_original=args.include_original,
+        )
+    if args.command == "report" and args.report_format == "markdown":
+        return (
+            markdown_report(report, context=context, recognition=recognition.to_dict()),
+            2 if report["eligibility"]["state"] == "held" else 0,
         )
     return report, 2 if report["eligibility"]["state"] == "held" else 0
 

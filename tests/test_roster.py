@@ -14,6 +14,7 @@ from provider_network_intake import (
     IntakeError,
     SourceContext,
     Variant,
+    is_valid_npi,
 )
 from provider_network_intake.jsonio import loads
 
@@ -422,3 +423,25 @@ def test_catalog_revision_is_an_explicit_integer(tmp_path, context, definition, 
     with pytest.raises(IntakeError, match="nonnegative integer"):
         store.review("absent", actor="Reviewer", reason="Checked source", expected_revision=bad)
     assert store.snapshot().revision == 0
+
+
+def test_cms_npi_luhn_checksum_validation(context, definition):
+    assert is_valid_npi("1000000004") is True
+    assert is_valid_npi("1990001012") is True
+    assert is_valid_npi("1000000005") is False
+    assert is_valid_npi("1234567890") is False
+    assert is_valid_npi("12345") is False
+
+    payload = (
+        b"NPI,Site,Directory Flag,ZIP,Date\n"
+        b"1990001012,NORTH,N,37203,11/21/2026\n"
+        b"1000000005,SOUTH,Y,37067,11/21/2026\n"
+        b"1234567890,WEST,N,37027,11/21/2026\n"
+    )
+    engine = Engine()
+    inspection = engine.inspect(payload, context=context)
+    proposal = engine.proposal(inspection, Variant.from_dict(definition), catalog_revision=0)
+    report = engine.preview(payload, proposal=proposal, context=context)
+    assert report["findings"]["counts"]["invalid_npi_checksum"] == 2
+    assert "invalid_npi_shape" not in report["findings"]["counts"]
+    assert report["eligibility"]["state"] == "held"

@@ -99,3 +99,50 @@ def test_cli_inspect_malformed_csv_returns_structured_failure(tmp_path):
     )
     assert result.returncode == 1
     assert json.loads(result.stderr)["error"] == "IntakeError"
+
+
+def test_cli_report_emits_markdown_and_json(tmp_path):
+    source = tmp_path / "input.csv"
+    source.write_text("Practitioner NPI,Office ID\n1234567890,NORTH\n")
+    out_md = tmp_path / "report.md"
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "provider_network_intake.cli",
+            "report",
+            str(source),
+            "--source",
+            "synthetic",
+            "--delivery",
+            "one",
+            "--output",
+            str(out_md),
+        ],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 2
+    rendered = out_md.read_text(encoding="utf-8")
+    assert rendered.startswith("# Provider Network Intake Report\n")
+    assert "`invalid_npi_checksum`" in rendered
+
+    json_result = subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "provider_network_intake.cli",
+            "report",
+            str(source),
+            "--source",
+            "synthetic",
+            "--delivery",
+            "one",
+            "--report-format",
+            "json",
+        ],
+        capture_output=True,
+        text=True,
+    )
+    assert json_result.returncode == 2
+    assert json.loads(json_result.stdout)["findings"]["counts"]["invalid_npi_checksum"] == 1

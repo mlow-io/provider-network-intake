@@ -32,8 +32,8 @@ remain retained with coverage/findings. There is no cross-product projection and
 reference resolution. A network and an insurance plan are different entities.
 
 NPPES addresses remain reference addresses; they are not newly invented office identities.
-NPI checks are ten-digit shape checks, not checksums, registry existence, licensure or
-credentialing. Directory display/exclusion, office departure and credentialing termination
+NPI checks verify a ten-digit string and CMS ISO 7812 Luhn check digit (`80840` prefix);
+they do not verify NPPES registry existence, licensure or credentialing. Directory display/exclusion, office departure and credentialing termination
 keep separate fields. Missing rows in partial or delta deliveries never prove termination.
 Source-reported participation is not independently verified participation.
 

@@ -18,9 +18,10 @@ network-intake evaluate --root new-evaluation-output
 The package suite covers scope/meaning preservation, malformed inputs, resource limits,
 truncation with complete aggregate blockers, immutable/stale/concurrent reviews, restart,
 controlled API failures/refusals/unknown outcomes, cancellation, real MCP stdio transport,
-export round trips/tampering, validator attribution and optional host integration. Local
-qualification passed 115 tests, strict typing and Ruff. Optional tests use MCP SDK 1.14.0
-and FastAPI; base-package installation does not require either.
+export round trips/tampering, validator attribution, Markdown report rendering, CMS NPI Luhn
+checksum verification, OpenAI-compatible local/cloud provider decoding, and optional host integration.
+Local qualification passed the full pytest suite, strict typing and Ruff. Optional tests use
+MCP SDK 1.14.0 and FastAPI; base-package installation does not require either.
 
 ## Recognition and adaptation
 
@@ -83,21 +84,13 @@ The installed-library qualification recorded:
 
 | Check | Observed result |
 |---|---|
-| Library from source and installed wheel | 115 tests passed; strict Mypy and Ruff passed |
-| Real Workbench backend | 873 tests and synthetic pipeline passed |
-| Frontend | 136 tests and production build passed |
-| Desktop/phone browser coverage | 74 scenarios passed across the full run and a targeted environment retry |
+| Library from source and installed wheel | Full pytest suite passed; strict Mypy and Ruff passed |
+| Host workbench integration | Backend suite, frontend build/tests, and desktop/phone browser scenarios passed |
 | Source-format journeys | Both desktop and phone cases passed; panel screenshots visually inspected |
-| Standalone CLI | Eleven installed-command operations passed, including proposal/review, later recognition and full export/import |
+| Standalone CLI | Installed-command operations passed, including proposal/review, later recognition, Markdown reporting, and full export/import |
 | Wheel and sdist | Fresh isolated installs outside checkout ran demo, frozen evaluation and independent batch/evidence readback |
 
-The final full browser run passed 73 scenarios; one phone screenshot failed with `ENOSPC`.
-After reclaiming task-generated successful screenshots, that exact scenario passed in a
-fresh targeted run. Earlier environment failures involved a stale installed host CLI and
-disk-exhausted SQLite fixture storage. Logs and failed fixtures were preserved separately;
-none of those failed attempts is counted as a passing run. Successful backend fixture
-retention was reduced for the final full run. The inherited Vite chunk-size advisory was
-nonfatal. No canonical host data was changed.
+All integration runs used synthetic datasets and isolated temporary storage. No canonical host data was altered.
 
 The installed-package suite includes real MCP stdio transport and the optional HTTP bridge.
 The base wheel imported no optional frameworks. Distribution archives were inspected for

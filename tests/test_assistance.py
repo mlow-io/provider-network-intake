@@ -15,9 +15,11 @@ from provider_network_intake import (
     SourceContext,
 )
 from provider_network_intake.assistance import (
+    OpenAICompatibleProvider,
     ProviderFailure,
     ResponsesProvider,
     build_request,
+    discover_assistant_plugins,
     validate_output,
 )
 
@@ -309,3 +311,60 @@ def test_matching_cannot_override_conflicting_current_source_evidence():
     output.update(decision="match", variant_id=variant.id, bindings=[])
     with pytest.raises(IntakeError, match="contradicts"):
         validate_output(json.dumps(output).encode(), inspection, catalog, changed)
+
+
+def test_openai_compatible_provider_validates_endpoints_and_decodes_local_chat():
+    inspection, catalog, request = setup_request()
+    with pytest.raises(IntakeError, match="loopback"):
+        OpenAICompatibleProvider(base_url="http://example.com/v1", model="llama3.2")
+
+    local = OpenAICompatibleProvider(base_url="http://127.0.0.1:11434/v1", model="llama3.2")
+    assert local.endpoint_url == "http://127.0.0.1:11434/v1/chat/completions"
+
+    envelope = {
+        "choices": [{"message": {"role": "assistant", "content": json.dumps(valid_output())}}],
+        "usage": {"prompt_tokens": 120, "completion_tokens": 80},
+    }
+
+    class Opener:
+        def open(self, req, timeout):
+            assert "Authorization" not in req.headers
+            return io.BytesIO(json.dumps(envelope).encode())
+
+    with patch("provider_network_intake.assistance.build_opener", return_value=Opener()):
+        result = local.invoke(
+            inspection, catalog, evidence=request["evidence"], external_processing=True
+        )
+    assert result["state"] == "proposed"
+    assert result["receipt"]["provider"] == "openai-compatible"
+    assert result["receipt"]["usage"] == {"input_tokens": 120, "output_tokens": 80}
+
+
+def test_openai_compatible_provider_rejects_refusal_and_discovers_plugins():
+    inspection, catalog, request = setup_request()
+    remote = OpenAICompatibleProvider(
+        base_url="https://api.example.invalid/v1", model="custom-model", api_key="secret-token"
+    )
+
+    class RefusalOpener:
+        def open(self, req, timeout):
+            assert req.headers["Authorization"] == "Bearer secret-token"
+            return io.BytesIO(
+                json.dumps({"choices": [{"message": {"refusal": "Not enough context"}}]}).encode()
+            )
+
+    with (
+        patch("provider_network_intake.assistance.build_opener", return_value=RefusalOpener()),
+        pytest.raises(ProviderFailure, match="structured validation"),
+    ):
+        remote.invoke(inspection, catalog, evidence=request["evidence"], external_processing=True)
+
+    class FakeEntryPoint:
+        name = "custom-local"
+
+        def load(self):
+            return OpenAICompatibleProvider
+
+    with patch("provider_network_intake.assistance.entry_points", return_value=[FakeEntryPoint()]):
+        plugins = discover_assistant_plugins()
+    assert plugins == {"custom-local": OpenAICompatibleProvider}

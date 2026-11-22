@@ -4,20 +4,32 @@ Known-variant recognition and interpretation require no model. AI is an optional
 for unfamiliar fields and source semantics. Assistance is experimental; controlled tests
 establish engineering behavior, not the quality of an actual model's suggestions.
 
-## Direct API route
+## Direct API and local OpenAI-compatible routes
 
-The included `ResponsesProvider` uses one explicitly authorized OpenAI Responses request
-with a strict structured-output schema. Supply an account key through `OPENAI_API_KEY` and
-choose a model supporting that endpoint/schema. There is no default model, discovery of
-other applications' credentials, automatic invocation or automatic retry.
+The package ships two explicit `ProposalProvider` backends using strict structured-output JSON schemas:
+
+1. `ResponsesProvider` — uses one explicitly authorized OpenAI Responses request (`https://api.openai.com/v1/responses`) with `OPENAI_API_KEY`.
+2. `OpenAICompatibleProvider` — targets any OpenAI-compatible `/chat/completions` endpoint, including **local air-gapped Ollama or vLLM** (`http://127.0.0.1:11434/v1` / `http://localhost:...`) with no API key or external network egress, as well as remote `https://` gateways. Plain `http://` is rejected for non-loopback hosts.
+
+There is no default model, discovery of other applications' credentials, automatic invocation or automatic retry.
 
 ```sh
+# OpenAI Responses API
 network-intake assist roster.csv --source sender --delivery b --catalog catalog.sqlite3 \
   --evidence curated-excerpts.json --model "$PNI_MODEL" --allow-external-processing \
   --journal invocations.sqlite3 --request-id delivery-b-attempt-1 --output suggestion.json
+
+# Local Ollama / vLLM (no row values leave localhost; still requires explicit opt-in)
+network-intake assist roster.csv --source sender --delivery b --catalog catalog.sqlite3 \
+  --evidence curated-excerpts.json --model llama3.2 --base-url http://127.0.0.1:11434/v1 \
+  --allow-external-processing --journal invocations.sqlite3 \
+  --request-id delivery-b-local-1 --output suggestion.json
+
 network-intake preview roster.csv --source sender --delivery b --catalog catalog.sqlite3 \
   --proposal suggestion.json
 ```
+
+Third-party backends can also register under the `provider_network_intake.assistants` Python entry-point group and are discoverable via `discover_assistant_plugins()`.
 
 The evidence file is a bounded JSON object mapping caller-curated IDs to source-guide
 excerpts. Review what will be sent: descriptors include header text and aggregate counts;

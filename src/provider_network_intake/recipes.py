@@ -8,7 +8,14 @@ from dataclasses import dataclass
 from datetime import date, datetime
 from typing import Any
 
-from .contracts import BOOLEAN_FIELDS, DATE_FIELDS, FIELDS, IDENTIFIER_FIELDS, contract
+from .contracts import (
+    BOOLEAN_FIELDS,
+    DATE_FIELDS,
+    FIELDS,
+    IDENTIFIER_FIELDS,
+    contract,
+    is_valid_npi,
+)
 from .errors import IntakeError, ResourceLimit
 from .jsonio import canonical, digest, object_keys, text
 from .models import Finding, Findings, SourceContext
@@ -388,7 +395,16 @@ class PreparedRecipe:
                             "invalid_npi_shape",
                             "structure",
                             locator,
-                            f"{target} requires ten text digits; existence/checksum not assessed",
+                            f"{target} requires ten text digits; registry existence not assessed",
+                        )
+                    )
+                elif target in IDENTIFIER_FIELDS and not is_valid_npi(value):
+                    findings.add(
+                        Finding(
+                            "invalid_npi_checksum",
+                            "structure",
+                            locator,
+                            f"{target} fails CMS Luhn check-digit validation; registry existence not assessed",
                         )
                     )
                 elif target in DATE_FIELDS and (

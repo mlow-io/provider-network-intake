@@ -331,3 +331,110 @@ def exceptions_csv(report: dict[str, Any]) -> str:
         ]
     )
     return stream.getvalue()
+
+
+def _md_cell(value: Any) -> str:
+    return (
+        str(value).replace("\\", "\\\\").replace("|", "\\|").replace("\r", " ").replace("\n", " ")
+    )
+
+
+def markdown_report(
+    report: dict[str, Any],
+    *,
+    context: SourceContext | None = None,
+    recognition: dict[str, Any] | None = None,
+) -> str:
+    """Render a compact, zero-dependency Markdown quality and drift report."""
+    ctx = report.get("context") or {}
+    source = context.source if context else ctx.get("source", "unknown")
+    delivery = context.delivery_id if context else ctx.get("delivery_id", "unknown")
+    payer = context.payer if context else ctx.get("payer")
+    network = context.network if context else ctx.get("network")
+    source_version = context.source_version if context else ctx.get("source_version")
+    eligibility = report.get("eligibility") or {}
+    findings = report.get("findings") or {}
+    counts: dict[str, int] = findings.get("counts") or {}
+    items: list[dict[str, Any]] = findings.get("items") or []
+    layers: dict[str, str] = report.get("layers") or {}
+    uninterpreted: list[str] = report.get("uninterpreted_fields") or []
+
+    scope_parts = [f"source=`{source}`", f"delivery=`{delivery}`"]
+    if payer:
+        scope_parts.append(f"payer=`{payer}`")
+    if network:
+        scope_parts.append(f"network=`{network}`")
+    if source_version:
+        scope_parts.append(f"version=`{source_version}`")
+
+    lines = [
+        "# Provider Network Intake Report",
+        "",
+        f"**Scope:** {' · '.join(scope_parts)}",
+        "",
+        "## Summary",
+        "",
+        "| Metric | Value |",
+        "|---|---|",
+        f"| Rows assessed | {report.get('row_count', 0)} |",
+        f"| Eligibility | `{eligibility.get('state', 'unknown')}` |",
+        f"| Operational approval | `{report.get('approval', 'not_performed')}` |",
+        f"| Coverage | `{report.get('coverage', 'unknown')}` |",
+    ]
+    variant_id = report.get("variant_id") or report.get("contract")
+    if variant_id:
+        lines.append(f"| Variant / Contract | `{variant_id}` |")
+    if recognition is not None:
+        lines.append(f"| Schema recognition | `{recognition.get('status', 'unknown')}` |")
+    lines.append(f"| Total findings | {findings.get('total', 0)} |")
+
+    if layers:
+        lines.extend(["", "## Layer Outcomes", "", "| Layer | Status |", "|---|---|"])
+        for layer_name in sorted(layers):
+            lines.append(f"| `{_md_cell(layer_name)}` | `{_md_cell(layers[layer_name])}` |")
+
+    if counts:
+        lines.extend(["", "## Findings by Code", "", "| Code | Count |", "|---|---:|"])
+        for code, count in sorted(counts.items(), key=lambda pair: (-pair[1], pair[0])):
+            lines.append(f"| `{_md_cell(code)}` | {count} |")
+
+    if items:
+        preview = items[:25]
+        lines.extend(
+            [
+                "",
+                "## Detailed Findings",
+                "",
+                "| Severity | Layer | Code | Locator | Message |",
+                "|---|---|---|---|---|",
+            ]
+        )
+        for item in preview:
+            lines.append(
+                "| "
+                + " | ".join(
+                    [
+                        _md_cell(item.get("severity", "")),
+                        f"`{_md_cell(item.get('layer', ''))}`",
+                        f"`{_md_cell(item.get('code', ''))}`",
+                        f"`{_md_cell(item.get('locator', ''))}`",
+                        _md_cell(item.get("message", "")),
+                    ]
+                )
+                + " |"
+            )
+        total_findings = findings.get("total", len(items))
+        if total_findings > len(preview):
+            lines.append(
+                f"\n_Showing {len(preview)} of {total_findings} findings; inspect JSON or full bundle for complete details._"
+            )
+
+    if uninterpreted:
+        lines.extend(["", "## Uninterpreted Fields", ""])
+        for field_name in uninterpreted:
+            lines.append(f"- `{_md_cell(field_name)}`")
+
+    notice = report.get("notice")
+    if notice:
+        lines.extend(["", f"> {notice}"])
+    return "\n".join(lines) + "\n"

@@ -5,8 +5,7 @@ source-format review panel to that existing analyst application. `Engine` and
 `CatalogStore` can instead be embedded in any Python application; no Workbench database
 or frontend is required. See [API](../../docs/API.md).
 
-The host patch targets public Workbench commit `52a6f4f`. Apply it in a disposable checkout
-or worktree of [Provider Directory Workbench](https://github.com/mlow-io/provider-directory-workbench).
+The host patch targets the earlier Provider Directory Workbench base commit `52a6f4f`. In the public [Provider Data Workbench](https://github.com/mlow-io/provider-data-workbench), `provider-network-intake` can be installed directly alongside the FastAPI backend (`pip install -e .`) and auto-mounted into the operator UI without applying a separate patch. To test the standalone example patch against the older base revision:
 Install the built library wheel into the interpreter used to launch that host. From the
 Workbench checkout, with `INTAKE_CHECKOUT` set to this library's directory:
 

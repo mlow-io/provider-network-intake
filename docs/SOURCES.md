@@ -6,7 +6,7 @@ of a new schema-matching invention.
 
 | Source | Relevant pattern |
 |---|---|
-| [Provider Directory Workbench](https://github.com/mlow-io/provider-directory-workbench/tree/52a6f4f) | Original application context: retained originals, data-only normalization recipes, separate review/acceptance, native source evidence |
+| [Provider Data Workbench](https://github.com/mlow-io/provider-data-workbench) | Host operator workbench: retained originals, data-only normalization recipes, separate review/acceptance, native source evidence |
 | [Frictionless](https://github.com/frictionlessdata/frictionless-py) | Consumable tabular descriptors and row/field diagnostic reports |
 | [CanDIG clinical ETL](https://github.com/CanDIG/clinical_ETL_code/tree/2c5cbe80e3642c094a7d1aa6d063787b9db8631a) | Explicit mapping configuration, coverage statistics and separate conversion diagnostics |
 | [FHIR Schema](https://github.com/fhir-schema/fhir-schema/tree/3f5c3eda5e919de37e58a93291889c508abc933b) | Explicit schema/terminology boundaries and path-qualified errors |

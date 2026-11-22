@@ -341,7 +341,7 @@ class Engine:
             "retained_detail_budget": 4 * 1024 * 1024,
             "findings": findings.to_dict(),
             "approval": "not_performed",
-            "notice": "Source-reported evidence only; NPI existence/checksum, payer submission completeness and real-world participation are not verified.",
+            "notice": "Source-reported evidence only; NPI registry existence, payer submission completeness and real-world participation are not verified.",
         }
         report["eligibility"] = self.assess(report)
         return report

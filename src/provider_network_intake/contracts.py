@@ -2,9 +2,27 @@
 
 from __future__ import annotations
 
+import re
 from typing import Any
 
 from .errors import IntakeError
+
+
+def is_valid_npi(value: str) -> bool:
+    """Validate a 10-digit US NPI using the CMS ISO 7812 Luhn check digit (80840 prefix)."""
+    if not isinstance(value, str) or not re.fullmatch(r"[0-9]{10}", value):
+        return False
+    digits = [int(ch) for ch in f"80840{value[:-1]}"]
+    total = 0
+    for idx, digit in enumerate(reversed(digits)):
+        if idx % 2 == 0:
+            digit *= 2
+            if digit > 9:
+                digit -= 9
+        total += digit
+    check = (10 - (total % 10)) % 10
+    return check == int(value[-1])
+
 
 FIELDS = frozenset(
     {

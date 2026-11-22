@@ -97,6 +97,8 @@ network-intake propose roster.csv --source sender --delivery b --catalog catalog
   --definition definition.json --save --request-id review-b --output proposal.json
 network-intake preview roster.csv --source sender --delivery b --catalog catalog.sqlite3 \
   --proposal proposal.json --output preview.json
+network-intake report roster.csv --source sender --delivery b --catalog catalog.sqlite3 \
+  --output report.md
 network-intake review --catalog catalog.sqlite3 --proposal-id PROPOSAL_ID \
   --actor Reviewer --reason 'Checked source instructions' --expected-revision 0
 network-intake export roster.csv --source sender --delivery b --catalog catalog.sqlite3 \
@@ -150,5 +152,7 @@ within wire version 1; unsupported targets fail validation rather than disappear
 
 Targets retain text, except the explicitly interpreted `directory_visible` boolean. Date
 operations produce ISO calendar dates; timestamp parsing and terminology validation are not
-implied. NPI, ZIP and extension values remain text. `reported_status` is a source assertion;
+implied. NPI, ZIP and extension values remain text; identifier fields (`practitioner_npi`,
+`billing_npi`, `group_npi`) validate both 10-digit format and the CMS ISO 7812 Luhn check
+digit (`is_valid_npi`). `reported_status` is a source assertion;
 `record_action` is a delivery/change instruction and never substitutes for participation.

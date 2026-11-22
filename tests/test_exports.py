@@ -6,6 +6,7 @@ from provider_network_intake import Engine, IntakeError, SourceContext, Variant
 from provider_network_intake.exports import (
     exceptions_csv,
     iter_bundle_evidence,
+    markdown_report,
     read_bundle,
     write_bundle,
     write_full_bundle,
@@ -154,3 +155,18 @@ def test_preview_bundle_does_not_claim_to_have_a_full_evidence_stream(tmp_path):
     assert not read_bundle(path)["evidence_complete"]
     with pytest.raises(IntakeError, match="bounded preview"):
         list(iter_bundle_evidence(path))
+
+
+def test_markdown_report_summarizes_scope_and_bounded_findings():
+    payload = b"Practitioner NPI,Office ID\n1234567890,NORTH\n"
+    context = SourceContext("cumberland", "nov-2026", payer="volunteer", network="ppo")
+    engine = Engine()
+    inspection = engine.inspect(payload, context=context)
+    proposal = engine.propose_adaptation(inspection)
+    result = engine.preview(payload, proposal=proposal, context=context)
+    rendered = markdown_report(result, context=context, recognition={"status": "unknown"})
+    assert "# Provider Network Intake Report" in rendered
+    assert "source=`cumberland`" in rendered
+    assert "`invalid_npi_checksum`" in rendered
+    assert "| Eligibility | `held` |" in rendered
+    assert "| Schema recognition | `unknown` |" in rendered
