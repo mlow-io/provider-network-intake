@@ -309,9 +309,9 @@ class Engine:
                         "warning",
                     )
                 )
-            if is_hospital_based_taxonomy(values.get("specialty")) and is_accepting_new_patients_value(
-                values.get("panel_status")
-            ):
+            if is_hospital_based_taxonomy(
+                values.get("specialty")
+            ) and is_accepting_new_patients_value(values.get("panel_status")):
                 findings.add(
                     Finding(
                         "hospital_based_accepting_new_patients",

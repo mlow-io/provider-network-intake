@@ -20,7 +20,9 @@ def test_hospital_based_taxonomy_and_regime_classification() -> None:
     assert is_hospital_based_taxonomy("207Q00000X Family Medicine") is False
 
     assert classify_regulatory_regime("Volunteer Commercial PPO")["regime"] == "commercial_nsa"
-    assert classify_regulatory_regime("MidSouth Medicare Advantage")["regime"] == "medicare_advantage"
+    assert (
+        classify_regulatory_regime("MidSouth Medicare Advantage")["regime"] == "medicare_advantage"
+    )
     assert classify_regulatory_regime("TennCare Community Plan")["regime"] == "medicaid_mco"
     assert classify_regulatory_regime("FEDVIP Dental PPO")["regime"] == "delegated_dental_vision"
     assert classify_regulatory_regime(None)["regime"] == "unclassified_regime"
@@ -28,10 +30,22 @@ def test_hospital_based_taxonomy_and_regime_classification() -> None:
 
 def test_phone_conflict_taxonomy() -> None:
     assert classify_phone_conflict("(615) 555-0101", "1-615-555-0101")["category"] == "exact_match"
-    assert classify_phone_conflict("800-555-0199", "615-555-0142")["category"] == "toll_free_centralized_line"
-    assert classify_phone_conflict("615-555-0101", "615-555-0142")["category"] == "same_npa_nxx_clinic_pbx"
-    assert classify_phone_conflict("615-322-0101", "615-885-0142")["category"] == "same_area_code_different_exchange"
-    assert classify_phone_conflict("615-555-0101", "270-555-0142")["category"] == "different_area_code_or_state"
+    assert (
+        classify_phone_conflict("800-555-0199", "615-555-0142")["category"]
+        == "toll_free_centralized_line"
+    )
+    assert (
+        classify_phone_conflict("615-555-0101", "615-555-0142")["category"]
+        == "same_npa_nxx_clinic_pbx"
+    )
+    assert (
+        classify_phone_conflict("615-322-0101", "615-885-0142")["category"]
+        == "same_area_code_different_exchange"
+    )
+    assert (
+        classify_phone_conflict("615-555-0101", "270-555-0142")["category"]
+        == "different_area_code_or_state"
+    )
 
 
 def test_licensure_gate_never_promotes_self_reported_to_psv_verified() -> None:

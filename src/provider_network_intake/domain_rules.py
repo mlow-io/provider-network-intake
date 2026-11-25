@@ -12,11 +12,11 @@ from __future__ import annotations
 import re
 
 HOSPITAL_BASED_TAXONOMY_PREFIXES: tuple[str, ...] = (
-    "2085R",   # Radiology
-    "207L",    # Anesthesiology
-    "207P",    # Emergency Medicine
-    "207Z",    # Pathology
-    "208M",    # Hospitalist
+    "2085R",  # Radiology
+    "207L",  # Anesthesiology
+    "207P",  # Emergency Medicine
+    "207Z",  # Pathology
+    "208M",  # Hospitalist
     "367500",  # Certified Registered Nurse Anesthetist (CRNA)
 )
 
@@ -33,7 +33,16 @@ HOSPITAL_BASED_KEYWORDS: tuple[str, ...] = (
 TOLL_FREE_AREA_CODES = frozenset({"800", "888", "877", "866", "855", "844", "833"})
 
 ACCEPTING_VALUES = frozenset(
-    {"newpt", "accepting", "open", "true", "yes", "y", "accepting_new_patients", "accepting new patients"}
+    {
+        "newpt",
+        "accepting",
+        "open",
+        "true",
+        "yes",
+        "y",
+        "accepting_new_patients",
+        "accepting new patients",
+    }
 )
 
 
@@ -65,19 +74,36 @@ def classify_regulatory_regime(network_or_payer: str | None) -> dict[str, str]:
             "label": "Medicaid / TennCare MCO",
             "sla_note": "Governed by state Medicaid MCO network-adequacy & CMS Medicaid managed-care directory standards (separate from commercial NSA rules).",
         }
-    if any(k in text for k in ("medicare advantage", "midsouth", "d-snp", "c-snp", "dual complete", "ma ", "ma-", "-ma")):
+    if any(
+        k in text
+        for k in (
+            "medicare advantage",
+            "midsouth",
+            "d-snp",
+            "c-snp",
+            "dual complete",
+            "ma ",
+            "ma-",
+            "-ma",
+        )
+    ):
         return {
             "regime": "medicare_advantage",
             "label": "CMS Medicare Advantage",
             "sla_note": "Subject to CMS Medicare Advantage directory accuracy oversight and REAL Health Providers Act verification cadence.",
         }
-    if any(k in text for k in ("dental", "vision", "fedvip", "optometry", "spectera", "healthplex")):
+    if any(
+        k in text for k in ("dental", "vision", "fedvip", "optometry", "spectera", "healthplex")
+    ):
         return {
             "regime": "delegated_dental_vision",
             "label": "Delegated Dental / Vision",
             "sla_note": "Often routed through delegated dental/vision vendor hubs; check for multi-site corporate hub fan-out.",
         }
-    if any(k in text for k in ("commercial", "ppo", "epo", "hmo", "erisa", "volunteer", "choice", "options")):
+    if any(
+        k in text
+        for k in ("commercial", "ppo", "epo", "hmo", "erisa", "volunteer", "choice", "options")
+    ):
         return {
             "regime": "commercial_nsa",
             "label": "Commercial / NSA ERISA",
