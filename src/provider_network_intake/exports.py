@@ -384,6 +384,9 @@ def markdown_report(
     variant_id = report.get("variant_id") or report.get("contract")
     if variant_id:
         lines.append(f"| Variant / Contract | `{variant_id}` |")
+    regime = report.get("regulatory_regime")
+    if isinstance(regime, dict) and regime.get("label"):
+        lines.append(f"| Regulatory regime | `{_md_cell(regime['label'])}` |")
     if recognition is not None:
         lines.append(f"| Schema recognition | `{recognition.get('status', 'unknown')}` |")
     lines.append(f"| Total findings | {findings.get('total', 0)} |")

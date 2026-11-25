@@ -54,6 +54,8 @@ FIELDS = frozenset(
         "credentialing_end",
         "source_updated_at",
         "specialty",
+        "license_number",
+        "license_state",
     }
 )
 BOOLEAN_FIELDS = frozenset({"directory_visible"})

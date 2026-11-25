@@ -122,7 +122,7 @@ class Variant:
                         allowed = {
                             "phone_us": {"phone", "fax"},
                             "zip_us": {"zip"},
-                            "state_us": {"state"},
+                            "state_us": {"state", "license_state"},
                         }
                         if field not in allowed[name]:
                             raise IntakeError(f"{name} cannot transform {field}")

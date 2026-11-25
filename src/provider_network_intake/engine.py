@@ -10,6 +10,12 @@ from typing import Any
 from .adapters import csv_roster, native
 from .catalog_store import CatalogSnapshot
 from .contracts import CONTRACTS
+from .domain_rules import (
+    assess_licensure_state_consistency,
+    classify_regulatory_regime,
+    is_accepting_new_patients_value,
+    is_hospital_based_taxonomy,
+)
 from .errors import Conflict, IntakeError
 from .jsonio import bytes_digest, digest, object_keys
 from .models import Finding, Findings, Inspection, SourceContext, definition_scope
@@ -30,6 +36,10 @@ ALIASES = {
     "address": {"office address", "street address"},
     "record_id": {"record id", "membership id"},
     "entity_class": {"entity class", "classification"},
+    "specialty": {"specialty", "nucc taxonomy", "taxonomy"},
+    "panel_status": {"panel status", "accepting new patients", "accepting patients"},
+    "license_number": {"license number", "state license number"},
+    "license_state": {"license state", "license state code"},
 }
 
 
@@ -299,6 +309,34 @@ class Engine:
                         "warning",
                     )
                 )
+            if is_hospital_based_taxonomy(values.get("specialty")) and is_accepting_new_patients_value(
+                values.get("panel_status")
+            ):
+                findings.add(
+                    Finding(
+                        "hospital_based_accepting_new_patients",
+                        "policy",
+                        locator,
+                        "Hospital-based specialty lists accepting new patients; confirm direct outpatient scheduling before directory display",
+                        "warning",
+                        blocks=(),
+                    )
+                )
+            if values.get("state") and values.get("license_state"):
+                lic_eval = assess_licensure_state_consistency(
+                    str(values["state"]), str(values["license_state"])
+                )
+                if lic_eval["status"] == "out_of_state_license_only_unverified_psv":
+                    findings.add(
+                        Finding(
+                            "license_state_mismatch_unverified_psv",
+                            "policy",
+                            locator,
+                            lic_eval["note"],
+                            "warning",
+                            blocks=(),
+                        )
+                    )
             if len(result_rows) < detail_limit:
                 cost = detail_cost(row)
                 if retained_cost + cost <= 4 * 1024 * 1024:
@@ -331,6 +369,7 @@ class Engine:
             "variant_id": variant.id,
             "variant": definition,
             "catalog_revision": proposal["catalog_revision"],
+            "regulatory_regime": classify_regulatory_regime(context.network or context.payer),
             "layers": layers,
             "coverage": "partial" if unmapped else "complete_for_declared_scope",
             "uninterpreted_fields": unmapped,
